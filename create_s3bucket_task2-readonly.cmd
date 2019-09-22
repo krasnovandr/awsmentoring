@@ -1,0 +1,1 @@
+aws s3api create-bucket --bucket andreikstaticwebsitetask5 --region us-east-2 --create-bucket-configuration LocationConstraint=us-east-2 --profile s3_ra_user
