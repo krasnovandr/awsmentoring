@@ -2,7 +2,8 @@ import boto3
 import os
 import csv
 
-s3 = boto3.client('s3')
+session = boto3.Session(profile_name='aws_mentoring_s3_readonly')
+s3 = session.client('s3')
 
 class FileInfo:
   fileName = ""

@@ -1,1 +1,1 @@
-aws s3 sync s3://andreikstaticwebsitetask2 DownloadedBucket
+aws s3 sync s3://andreikstaticwebsitetask2 DownloadedBucket --profile aws_mentoring_mentee
