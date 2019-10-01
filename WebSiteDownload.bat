@@ -1,0 +1,1 @@
+aws s3 cp s3://andreikstaticwebsite C:\Apache24\htdocs --recursive

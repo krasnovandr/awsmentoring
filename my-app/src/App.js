@@ -8,7 +8,10 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Hello AWS!!! I'm React App. Version 2 
+          Hello AWS!!! I'm React App.Running on EC2 Linux. 
+        </p>
+        <p>
+          Node 3
         </p>
       </header>
     </div>
