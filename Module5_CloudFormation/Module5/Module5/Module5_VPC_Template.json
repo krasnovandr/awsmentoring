@@ -209,7 +209,7 @@
         }
     },
     "Resources": {
-        "AndreikNetwork": {
+        "VPCNetwork": {
             "Type": "AWS::EC2::VPC",
             "Properties": {
                 "CidrBlock": "10.0.0.0/16",
@@ -226,11 +226,11 @@
                 }
             }
         },
-        "AndreikPublicSubnetA": {
+        "PublicSubnetA": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
                 "VpcId": {
-                    "Ref": "AndreikNetwork"
+                    "Ref": "VPCNetwork"
                 },
                 "CidrBlock": "10.0.11.0/24",
                 "AvailabilityZone": "us-east-2a",
@@ -247,11 +247,11 @@
                 }
             }
         },
-        "AndreiKPublicRouteTableA": {
+        "PublicRouteTableA": {
             "Type": "AWS::EC2::RouteTable",
             "Properties": {
                 "VpcId": {
-                    "Ref": "AndreikNetwork"
+                    "Ref": "VPCNetwork"
                 },
                 "Tags": [
                     {
@@ -266,18 +266,18 @@
                 }
             }
         },
-        "AndreikPublicRouteA": {
+        "PublicRouteA": {
             "Type": "AWS::EC2::Route",
             "DependsOn": [
-                "AndreikIGW"
+                "IGW"
             ],
             "Properties": {
                 "DestinationCidrBlock": "0.0.0.0/0",
                 "GatewayId": {
-                    "Ref": "AndreikIGW"
+                    "Ref": "IGW"
                 },
                 "RouteTableId": {
-                    "Ref": "AndreiKPublicRouteTableA"
+                    "Ref": "PublicRouteTableA"
                 }
             },
             "Metadata": {
@@ -286,7 +286,7 @@
                 }
             }
         },
-        "AndreikIGW": {
+        "IGW": {
             "Type": "AWS::EC2::InternetGateway",
             "Properties": {
                 "Tags": [
@@ -302,11 +302,11 @@
                 }
             }
         },
-        "AndreikPrivateSubnetA": {
+        "PrivateSubnetA": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
                 "VpcId": {
-                    "Ref": "AndreikNetwork"
+                    "Ref": "VPCNetwork"
                 },
                 "CidrBlock": "10.0.12.0/24",
                 "AvailabilityZone": "us-east-2a",
@@ -323,23 +323,44 @@
                 }
             }
         },
-        "AndreikElasticIpA": {
+        "DbSubnetA": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "CidrBlock": "10.0.13.0/24",
+                "AvailabilityZone": "us-east-2a",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreikDbSubnetA"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "b2976c97-7bc9-4f79-809b-a9f4631611fd"
+                }
+            }
+        },
+        "ElasticIpA": {
             "Type": "AWS::EC2::EIP",
             "Properties": {
                 "Domain": "vpc"
             }
         },
-        "AndreikNATgatewayA": {
+        "NATgatewayA": {
             "Type": "AWS::EC2::NatGateway",
             "Properties": {
                 "AllocationId": {
                     "Fn::GetAtt": [
-                        "AndreikElasticIpA",
+                        "ElasticIpA",
                         "AllocationId"
                     ]
                 },
                 "SubnetId": {
-                    "Ref": "AndreikPublicSubnetA"
+                    "Ref": "PublicSubnetA"
                 },
                 "Tags": [
                     {
@@ -354,15 +375,15 @@
                 }
             }
         },
-        "AndreikPrivateRouteA": {
+        "PrivateRouteA": {
             "Type": "AWS::EC2::Route",
             "Properties": {
                 "DestinationCidrBlock": "0.0.0.0/0",
                 "NatGatewayId": {
-                    "Ref": "AndreikNATgatewayA"
+                    "Ref": "NATgatewayA"
                 },
                 "RouteTableId": {
-                    "Ref": "AndreikPrivateRouteTableA"
+                    "Ref": "PrivateRouteTableA"
                 }
             },
             "Metadata": {
@@ -371,11 +392,11 @@
                 }
             }
         },
-        "AndreikPrivateRouteTableA": {
+        "PrivateRouteTableA": {
             "Type": "AWS::EC2::RouteTable",
             "Properties": {
                 "VpcId": {
-                    "Ref": "AndreikNetwork"
+                    "Ref": "VPCNetwork"
                 },
                 "Tags": [
                     {
@@ -394,10 +415,10 @@
             "Type": "AWS::EC2::SubnetRouteTableAssociation",
             "Properties": {
                 "SubnetId": {
-                    "Ref": "AndreikPublicSubnetA"
+                    "Ref": "PublicSubnetA"
                 },
                 "RouteTableId": {
-                    "Ref": "AndreiKPublicRouteTableA"
+                    "Ref": "PublicRouteTableA"
                 }
             },
             "Metadata": {
@@ -410,10 +431,26 @@
             "Type": "AWS::EC2::SubnetRouteTableAssociation",
             "Properties": {
                 "SubnetId": {
-                    "Ref": "AndreikPrivateSubnetA"
+                    "Ref": "PrivateSubnetA"
                 },
                 "RouteTableId": {
-                    "Ref": "AndreikPrivateRouteTableA"
+                    "Ref": "PrivateRouteTableA"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "22a2ed98-4995-456c-b6f6-f19aea928735"
+                }
+            }
+        },
+        "dbSubnetRouteTableAssociation": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "DbSubnetA"
+                },
+                "RouteTableId": {
+                    "Ref": "PrivateRouteTableA"
                 }
             },
             "Metadata": {
@@ -426,19 +463,20 @@
             "Type": "AWS::EC2::VPCGatewayAttachment",
             "Properties": {
                 "InternetGatewayId": {
-                    "Ref": "AndreikIGW"
+                    "Ref": "IGW"
                 },
                 "VpcId": {
-                    "Ref": "AndreikNetwork"
+                    "Ref": "VPCNetwork"
                 }
             }
         },
-        "AndreikPublicSecurityGroupA": {
+        "PublicSecurityGroupA": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
                 "GroupDescription": "Public ssh secirity group for bastion hosts",
+                "GroupName": "AndreikPublicSecurityGroupA",
                 "VpcId": {
-                    "Ref": "AndreikNetwork"
+                    "Ref": "VPCNetwork"
                 },
                 "Tags": [
                     {
@@ -453,29 +491,61 @@
                         "ToPort": 22,
                         "CidrIp": "0.0.0.0/0"
                     }
-                ],
-                "SecurityGroupEgress": [
+                ]
+            }
+        },
+        "PrivateSecurityGroupA": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow ssh only from public group",
+                "GroupName": "AndreikPrivateSecurityGroupA",
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "Tags": [
                     {
-
+                        "Key": "Name",
+                        "Value": "AndreikPrivateSecurityGroupA"
+                    }
+                ],
+                "SecurityGroupIngress": [
+                    {
+                        "SourceSecurityGroupId": {
+                            "Ref": "PublicSecurityGroupA"
+                        },
                         "IpProtocol": "tcp",
                         "FromPort": 22,
-                        "ToPort": 22,
-                        "CidrIp": "0.0.0.0/0"
+                        "ToPort": 22
                     }
                 ]
             }
         }
     },
-    "Outputs" : {
-        "AndreikPublicSubnetA" : {
-          "Description" : "The subnet ID to use for public web servers",
-          "Value" :  { "Ref" : "AndreikPublicSubnetA" },
-          "Export" : { "Name" : {"Fn::Sub": "${AWS::StackName}-AndreikPublicSubnetA" }}
+    "Outputs": {
+        "AndreikPublicSubnetA": {
+            "Description": "The subnet ID to use for public web servers",
+            "Value": {
+                "Ref": "PublicSubnetA"
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Sub": "${AWS::StackName}-AndreikPublicSubnetA"
+                }
+            }
         },
-        "AndreikPublicSecurityGroupA" : {
-          "Description" : "The security group ID to use for public web servers",
-          "Value" :  { "Fn::GetAtt" : ["AndreikPublicSecurityGroupA", "GroupId"] },
-          "Export" : { "Name" : {"Fn::Sub": "${AWS::StackName}-AndreikPublicSecurityGroupA" }}
+        "AndreikPublicSecurityGroupA": {
+            "Description": "The security group ID to use for public web servers",
+            "Value": {
+                "Fn::GetAtt": [
+                    "PublicSecurityGroupA",
+                    "GroupId"
+                ]
+            },
+            "Export": {
+                "Name": {
+                    "Fn::Sub": "${AWS::StackName}-AndreikPublicSecurityGroupA"
+                }
+            }
         }
-      }
+    }
 }
