@@ -1,7 +1,12 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Parameters": {
-        "SecurityGroupIds": {
+        "PublicSecurityGroupIds": {
+            "Description": "Security groups that can be used to access the EC2 instances",
+            "Type": "List<AWS::EC2::SecurityGroup::Id>",
+            "ConstraintDescription": "must be list of EC2 security group ids"
+        },
+        "PrivateSecurityGroupIds": {
             "Description": "Security groups that can be used to access the EC2 instances",
             "Type": "List<AWS::EC2::SecurityGroup::Id>",
             "ConstraintDescription": "must be list of EC2 security group ids"
@@ -11,12 +16,20 @@
             "Type": "AWS::EC2::KeyPair::KeyName",
             "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
         },
-        "SubnetId": {
+        "PublicSubnetId": {
             "Description": "All Available Subnets",
             "Type": "AWS::EC2::Subnet::Id",
             "ConstraintDescription": "must be the name of an existing Subnet KeyPair."
         },
-        "InstanceName": {
+        "PrivateSubnetId": {
+            "Description": "All Available Subnets",
+            "Type": "AWS::EC2::Subnet::Id",
+            "ConstraintDescription": "must be the name of an existing Subnet KeyPair."
+        },
+        "PublicInstanceName": {
+            "Type": "String"
+        },
+        "PrivateInstanceName": {
             "Type": "String"
         }
     },
@@ -33,13 +46,13 @@
                 "NetworkInterfaces": [
                     {
                         "GroupSet": {
-                            "Ref": "SecurityGroupIds"
+                            "Ref": "PublicSecurityGroupIds"
                         },
                         "AssociatePublicIpAddress": "true",
                         "DeviceIndex": "0",
                         "DeleteOnTermination": "true",
                         "SubnetId": {
-                            "Ref": "SubnetId"
+                            "Ref": "PublicSubnetId"
                         }
                     }
                 ],
@@ -47,11 +60,43 @@
                     {
                         "Key": "Name",
                         "Value": {
-                            "Ref": "InstanceName"
+                            "Ref": "PublicInstanceName"
                         }
                     }
                 ]
             }
         },
+        "PrivateA": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "ImageId": "ami-00c03f7f7f2ec15c3",
+                "InstanceType": "t2.micro",
+                "AvailabilityZone": "us-east-2a",
+                "NetworkInterfaces": [
+                    {
+                        "GroupSet": {
+                            "Ref": "PrivateSecurityGroupIds"
+                        },
+                        "AssociatePublicIpAddress": "false",
+                        "DeviceIndex": "0",
+                        "DeleteOnTermination": "true",
+                        "SubnetId": {
+                            "Ref": "PrivateSubnetId"
+                        }
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Ref": "PrivateInstanceName"
+                        }
+                    }
+                ]
+            }
+        }
     }
 }
