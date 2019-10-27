@@ -1,0 +1,66 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "SecurityGroupIds": {
+            "Type": "List<AWS::EC2::SecurityGroup::Id>"
+        },
+        "KeyName": {
+            "Type": "String"
+        },
+        "SubnetId": {
+            "Type": "String"
+        },
+        "InstanceName": {
+            "Type": "String"
+        },
+        "AvailabilityZone": {
+            "Type": "String"
+        },
+        "AssociatePublicIpAddress": {
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "false",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "PublicA": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "ImageId": "ami-00c03f7f7f2ec15c3",
+                "InstanceType": "t2.micro",
+                "AvailabilityZone": {
+                    "Ref": "AvailabilityZone"
+                },
+                "NetworkInterfaces": [
+                    {
+                        "GroupSet": {
+                            "Ref": "SecurityGroupIds"
+                        },
+                        "AssociatePublicIpAddress": {
+                            "Ref": "AssociatePublicIpAddress"
+                        },
+                        "DeviceIndex": "0",
+                        "DeleteOnTermination": "true",
+                        "SubnetId": {
+                            "Ref": "SubnetId"
+                        }
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Ref": "InstanceName"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

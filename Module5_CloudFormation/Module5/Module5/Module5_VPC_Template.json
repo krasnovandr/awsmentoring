@@ -1,213 +1,5 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Metadata": {
-        "AWS::CloudFormation::Designer": {
-            "f0763cdb-e11a-464d-8e0f-2efb42d0e26d": {
-                "size": {
-                    "width": 1530,
-                    "height": 600
-                },
-                "position": {
-                    "x": 70,
-                    "y": 20
-                },
-                "z": 0,
-                "embeds": [
-                    "2996784f-3bd2-46ef-adde-d1c0dc020fb2",
-                    "98b8be5e-81c3-4210-955c-eade4f4703df",
-                    "0a90abf8-6f41-4bb5-9d74-06a2b640f666",
-                    "b2976c97-7bc9-4f79-809b-a9f4631611fd",
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                    "a2d48c3c-835d-44ed-bc76-02c020e2b92b"
-                ]
-            },
-            "a2d48c3c-835d-44ed-bc76-02c020e2b92b": {
-                "size": {
-                    "width": 180,
-                    "height": 120
-                },
-                "position": {
-                    "x": 180,
-                    "y": 390
-                },
-                "z": 1,
-                "parent": "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                "embeds": [],
-                "iscontainedinside": [
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d"
-                ]
-            },
-            "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c": {
-                "size": {
-                    "width": 160,
-                    "height": 130
-                },
-                "position": {
-                    "x": 560,
-                    "y": 380
-                },
-                "z": 1,
-                "parent": "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                "embeds": [
-                    "79e44717-7819-4069-a23f-35735103b95a"
-                ],
-                "iscontainedinside": [
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d"
-                ]
-            },
-            "79e44717-7819-4069-a23f-35735103b95a": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 600,
-                    "y": 430
-                },
-                "z": 2,
-                "parent": "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                "embeds": [],
-                "isassociatedwith": [
-                    "98b8be5e-81c3-4210-955c-eade4f4703df"
-                ],
-                "iscontainedinside": [
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c",
-                    "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c"
-                ]
-            },
-            "98b8be5e-81c3-4210-955c-eade4f4703df": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 600,
-                    "y": 240
-                },
-                "z": 1,
-                "parent": "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                "embeds": []
-            },
-            "b2976c97-7bc9-4f79-809b-a9f4631611fd": {
-                "size": {
-                    "width": 130,
-                    "height": 110
-                },
-                "position": {
-                    "x": 830,
-                    "y": 400
-                },
-                "z": 1,
-                "parent": "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                "embeds": [],
-                "iscontainedinside": [
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d"
-                ]
-            },
-            "2996784f-3bd2-46ef-adde-d1c0dc020fb2": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 1110,
-                    "y": 230
-                },
-                "z": 1,
-                "parent": "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                "embeds": []
-            },
-            "74c168a9-e38e-4ae9-a90d-c207dd63dab3": {
-                "size": {
-                    "width": 60,
-                    "height": 60
-                },
-                "position": {
-                    "x": 1110,
-                    "y": 430
-                },
-                "z": 2,
-                "parent": "0a90abf8-6f41-4bb5-9d74-06a2b640f666",
-                "embeds": [],
-                "isassociatedwith": [
-                    "2996784f-3bd2-46ef-adde-d1c0dc020fb2"
-                ],
-                "iscontainedinside": [
-                    "0a90abf8-6f41-4bb5-9d74-06a2b640f666",
-                    "0a90abf8-6f41-4bb5-9d74-06a2b640f666",
-                    "0a90abf8-6f41-4bb5-9d74-06a2b640f666"
-                ]
-            },
-            "0a90abf8-6f41-4bb5-9d74-06a2b640f666": {
-                "size": {
-                    "width": 140,
-                    "height": 140
-                },
-                "position": {
-                    "x": 1070,
-                    "y": 380
-                },
-                "z": 1,
-                "parent": "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                "embeds": [
-                    "74c168a9-e38e-4ae9-a90d-c207dd63dab3"
-                ],
-                "iscontainedinside": [
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d",
-                    "f0763cdb-e11a-464d-8e0f-2efb42d0e26d"
-                ]
-            },
-            "22a2ed98-4995-456c-b6f6-f19aea928735": {
-                "source": {
-                    "id": "0a90abf8-6f41-4bb5-9d74-06a2b640f666"
-                },
-                "target": {
-                    "id": "b2976c97-7bc9-4f79-809b-a9f4631611fd"
-                },
-                "z": 1
-            },
-            "30611782-efa6-4c9b-a3c7-75fd860b47a8": {
-                "source": {
-                    "id": "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c"
-                },
-                "target": {
-                    "id": "a2d48c3c-835d-44ed-bc76-02c020e2b92b"
-                },
-                "z": 1
-            }
-        }
-    },
     "Resources": {
         "VPCNetwork": {
             "Type": "AWS::EC2::VPC",
@@ -219,11 +11,6 @@
                         "Value": "AndreikNetwork"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "f0763cdb-e11a-464d-8e0f-2efb42d0e26d"
-                }
             }
         },
         "PublicSubnetA": {
@@ -240,11 +27,6 @@
                         "Value": "AndreikPublicSubnetA"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "a2d48c3c-835d-44ed-bc76-02c020e2b92b"
-                }
             }
         },
         "PublicRouteTableA": {
@@ -259,11 +41,6 @@
                         "Value": "AndreiKPublicRouteTableA"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "3c278f6b-4a24-4bd2-9fb0-f0d39cccd47c"
-                }
             }
         },
         "PublicRouteA": {
@@ -279,10 +56,50 @@
                 "RouteTableId": {
                     "Ref": "PublicRouteTableA"
                 }
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "79e44717-7819-4069-a23f-35735103b95a"
+            }
+        },
+        "PublicSubnetB": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "CidrBlock": "10.0.21.0/24",
+                "AvailabilityZone": "us-east-2b",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreikPublicSubnetB"
+                    }
+                ]
+            }
+        },
+        "PublicRouteTableB": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreiKPublicRouteTableB"
+                    }
+                ]
+            }
+        },
+        "PublicRouteB": {
+            "Type": "AWS::EC2::Route",
+            "DependsOn": [
+                "IGW"
+            ],
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "IGW"
+                },
+                "RouteTableId": {
+                    "Ref": "PublicRouteTableB"
                 }
             }
         },
@@ -295,11 +112,6 @@
                         "Value": "AndreikIGW"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "98b8be5e-81c3-4210-955c-eade4f4703df"
-                }
             }
         },
         "PrivateSubnetA": {
@@ -316,11 +128,6 @@
                         "Value": "AndreikPrivateSubnetA"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "b2976c97-7bc9-4f79-809b-a9f4631611fd"
-                }
             }
         },
         "DbSubnetA": {
@@ -337,14 +144,47 @@
                         "Value": "AndreikDbSubnetA"
                     }
                 ]
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "b2976c97-7bc9-4f79-809b-a9f4631611fd"
-                }
+            }
+        },
+        "PrivateSubnetB": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "CidrBlock": "10.0.22.0/24",
+                "AvailabilityZone": "us-east-2b",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreikPrivateSubnetB"
+                    }
+                ]
+            }
+        },
+        "DbSubnetB": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "CidrBlock": "10.0.23.0/24",
+                "AvailabilityZone": "us-east-2b",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreikDbSubnetB"
+                    }
+                ]
             }
         },
         "ElasticIpA": {
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+                "Domain": "vpc"
+            }
+        },
+        "ElasticIpB": {
             "Type": "AWS::EC2::EIP",
             "Properties": {
                 "Domain": "vpc"
@@ -373,6 +213,26 @@
                 "AWS::CloudFormation::Designer": {
                     "id": "2996784f-3bd2-46ef-adde-d1c0dc020fb2"
                 }
+            }
+        },
+        "NATgatewayB": {
+            "Type": "AWS::EC2::NatGateway",
+            "Properties": {
+                "AllocationId": {
+                    "Fn::GetAtt": [
+                        "ElasticIpB",
+                        "AllocationId"
+                    ]
+                },
+                "SubnetId": {
+                    "Ref": "PublicSubnetB"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreikNATgatewayB"
+                    }
+                ]
             }
         },
         "PrivateRouteA": {
@@ -411,7 +271,33 @@
                 }
             }
         },
-        "publicSubnetRouteTableAssociation": {
+        "PrivateRouteB": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "NatGatewayId": {
+                    "Ref": "NATgatewayB"
+                },
+                "RouteTableId": {
+                    "Ref": "PrivateRouteTableB"
+                }
+            }
+        },
+        "PrivateRouteTableB": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreikPrivateRouteTableB"
+                    }
+                ]
+            }
+        },
+        "publicSubnetRouteTableAssociationA": {
             "Type": "AWS::EC2::SubnetRouteTableAssociation",
             "Properties": {
                 "SubnetId": {
@@ -420,14 +306,9 @@
                 "RouteTableId": {
                     "Ref": "PublicRouteTableA"
                 }
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "30611782-efa6-4c9b-a3c7-75fd860b47a8"
-                }
             }
         },
-        "privateSubnetRouteTableAssociation": {
+        "privateSubnetRouteTableAssociationA": {
             "Type": "AWS::EC2::SubnetRouteTableAssociation",
             "Properties": {
                 "SubnetId": {
@@ -436,14 +317,9 @@
                 "RouteTableId": {
                     "Ref": "PrivateRouteTableA"
                 }
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "22a2ed98-4995-456c-b6f6-f19aea928735"
-                }
             }
         },
-        "dbSubnetRouteTableAssociation": {
+        "dbSubnetRouteTableAssociationA": {
             "Type": "AWS::EC2::SubnetRouteTableAssociation",
             "Properties": {
                 "SubnetId": {
@@ -452,14 +328,9 @@
                 "RouteTableId": {
                     "Ref": "PrivateRouteTableA"
                 }
-            },
-            "Metadata": {
-                "AWS::CloudFormation::Designer": {
-                    "id": "22a2ed98-4995-456c-b6f6-f19aea928735"
-                }
             }
         },
-        "vpcIntrntGatewayAssociation": {
+        "vpcIntrntGatewayAssociationA": {
             "Type": "AWS::EC2::VPCGatewayAttachment",
             "Properties": {
                 "InternetGatewayId": {
@@ -467,6 +338,39 @@
                 },
                 "VpcId": {
                     "Ref": "VPCNetwork"
+                }
+            }
+        },
+        "publicSubnetRouteTableAssociationB": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "PublicSubnetB"
+                },
+                "RouteTableId": {
+                    "Ref": "PublicRouteTableB"
+                }
+            }
+        },
+        "privateSubnetRouteTableAssociationB": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "PrivateSubnetB"
+                },
+                "RouteTableId": {
+                    "Ref": "PrivateRouteTableB"
+                }
+            }
+        },
+        "dbSubnetRouteTableAssociationB": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "DbSubnetB"
+                },
+                "RouteTableId": {
+                    "Ref": "PrivateRouteTableB"
                 }
             }
         },
@@ -519,32 +423,55 @@
                     }
                 ]
             }
-        }
-    },
-    "Outputs": {
-        "AndreikPublicSubnetA": {
-            "Description": "The subnet ID to use for public web servers",
-            "Value": {
-                "Ref": "PublicSubnetA"
-            },
-            "Export": {
-                "Name": {
-                    "Fn::Sub": "${AWS::StackName}-AndreikPublicSubnetA"
-                }
+        },
+        "PublicSecurityGroupB": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Public ssh secirity group for bastion hosts",
+                "GroupName": "AndreikPublicSecurityGroupB",
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreikPublicSecurityGroupB"
+                    }
+                ],
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
             }
         },
-        "AndreikPublicSecurityGroupA": {
-            "Description": "The security group ID to use for public web servers",
-            "Value": {
-                "Fn::GetAtt": [
-                    "PublicSecurityGroupA",
-                    "GroupId"
+        "PrivateSecurityGroupB": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow ssh only from public group",
+                "GroupName": "AndreikPrivateSecurityGroupB",
+                "VpcId": {
+                    "Ref": "VPCNetwork"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "AndreikPrivateSecurityGroupB"
+                    }
+                ],
+                "SecurityGroupIngress": [
+                    {
+                        "SourceSecurityGroupId": {
+                            "Ref": "PublicSecurityGroupB"
+                        },
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22
+                    }
                 ]
-            },
-            "Export": {
-                "Name": {
-                    "Fn::Sub": "${AWS::StackName}-AndreikPublicSecurityGroupA"
-                }
             }
         }
     }

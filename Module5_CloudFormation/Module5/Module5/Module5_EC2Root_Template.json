@@ -1,0 +1,97 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "KeyName": {
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+            "Type": "AWS::EC2::KeyPair::KeyName",
+            "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
+        },
+        "PublicSecurityGroupId": {
+            "Description": "Public security group in A Zone",
+            "Type": "AWS::EC2::SecurityGroup::Id",
+            "ConstraintDescription": "Public security group in A Zone"
+        },
+        "PrivateSecurityGroupId": {
+            "Description": "Private security group in A Zone",
+            "Type": "AWS::EC2::SecurityGroup::Id",
+            "ConstraintDescription": "Private security group in A Zone"
+        },
+        "PublicSubnetId": {
+            "Description": "Public Subnet in A Zone",
+            "Type": "AWS::EC2::Subnet::Id",
+            "ConstraintDescription": "Public Subnet in A Zone"
+        },
+        "PrivateSubnetId": {
+            "Description": "Private Subnet in A Zone",
+            "Type": "AWS::EC2::Subnet::Id",
+            "ConstraintDescription": "Private Subnet in A Zone"
+        },
+        "DbSubnetId": {
+            "Description": "Db Subnet in A Zone",
+            "Type": "AWS::EC2::Subnet::Id",
+            "ConstraintDescription": "Db Subnet in A Zone"
+        }
+    },
+    "Resources": {
+        "PublicEc2A": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested_Template.json",
+                "Parameters": {
+                    "SecurityGroupIds": {
+                        "Ref": "PublicSecurityGroupId"
+                    },
+                    "KeyName": {
+                        "Ref": "KeyName"
+                    },
+                    "SubnetId": {
+                        "Ref": "PublicSubnetId"
+                    },
+                    "InstanceName": "AndreikPublicA",
+                    "AvailabilityZone": "us-east-2a",
+                    "AssociatePublicIpAddress": "true"
+                }
+            }
+        },
+        "PrivateEc2A": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested_Template.json",
+                "Parameters": {
+                    "SecurityGroupIds": {
+                        "Ref": "PrivateSecurityGroupId"
+                    },
+                    "KeyName": {
+                        "Ref": "KeyName"
+                    },
+                    "SubnetId": {
+                        "Ref": "PrivateSubnetId"
+                    },
+                    "InstanceName": "AndreikPrivateA",
+                    "AvailabilityZone": "us-east-2a",
+                    "AssociatePublicIpAddress": "false"
+                }
+            }
+        },
+        "DbEc2A": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested_Template.json",
+                "Parameters": {
+                    "SecurityGroupIds": {
+                        "Ref": "PrivateSecurityGroupId"
+                    },
+                    "KeyName": {
+                        "Ref": "KeyName"
+                    },
+                    "SubnetId": {
+                        "Ref": "DbSubnetId"
+                    },
+                    "InstanceName": "AndreikDbA",
+                    "AvailabilityZone": "us-east-2a",
+                    "AssociatePublicIpAddress": "false"
+                }
+            }
+        }
+    }
+}
