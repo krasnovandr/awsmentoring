@@ -1,0 +1,478 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Resources"                : {
+        "VPCNetwork" : {
+            "Type" : "AWS::EC2::VPC",
+            "Properties" : {
+                "CidrBlock" : "10.0.0.0/16",
+                "Tags"      : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikNetwork"
+                    }
+                ]
+            }
+        },
+        "PublicSubnetA" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "CidrBlock" : "10.0.11.0/24",
+                "AvailabilityZone" : "us-east-2a",
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPublicSubnetA"
+                    }
+                ]
+            }
+        },
+        "PublicRouteTableA" : {
+            "Type" : "AWS::EC2::RouteTable",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "Tags"  : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreiKPublicRouteTableA"
+                    }
+                ]
+            }
+        },
+        "PublicRouteA"      : {
+            "Type" : "AWS::EC2::Route",
+            "DependsOn" : [
+                "IGW"
+            ],
+            "Properties" : {
+                "DestinationCidrBlock" : "0.0.0.0/0",
+                "GatewayId"            : {
+                    "Ref" : "IGW"
+                },
+                "RouteTableId"         : {
+                    "Ref" : "PublicRouteTableA"
+                }
+            }
+        },
+        "PublicSubnetB"     : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "CidrBlock" : "10.0.21.0/24",
+                "AvailabilityZone" : "us-east-2b",
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPublicSubnetB"
+                    }
+                ]
+            }
+        },
+        "PublicRouteTableB" : {
+            "Type" : "AWS::EC2::RouteTable",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "Tags"  : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreiKPublicRouteTableB"
+                    }
+                ]
+            }
+        },
+        "PublicRouteB"      : {
+            "Type" : "AWS::EC2::Route",
+            "DependsOn" : [
+                "IGW"
+            ],
+            "Properties" : {
+                "DestinationCidrBlock" : "0.0.0.0/0",
+                "GatewayId"            : {
+                    "Ref" : "IGW"
+                },
+                "RouteTableId"         : {
+                    "Ref" : "PublicRouteTableB"
+                }
+            }
+        },
+        "IGW"               : {
+            "Type" : "AWS::EC2::InternetGateway",
+            "Properties" : {
+                "Tags" : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikIGW"
+                    }
+                ]
+            }
+        },
+        "PrivateSubnetA"    : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "CidrBlock" : "10.0.12.0/24",
+                "AvailabilityZone" : "us-east-2a",
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPrivateSubnetA"
+                    }
+                ]
+            }
+        },
+        "DbSubnetA"         : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "CidrBlock" : "10.0.13.0/24",
+                "AvailabilityZone" : "us-east-2a",
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikDbSubnetA"
+                    }
+                ]
+            }
+        },
+        "PrivateSubnetB"    : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "CidrBlock" : "10.0.22.0/24",
+                "AvailabilityZone" : "us-east-2b",
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPrivateSubnetB"
+                    }
+                ]
+            }
+        },
+        "DbSubnetB"         : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "CidrBlock" : "10.0.23.0/24",
+                "AvailabilityZone" : "us-east-2b",
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikDbSubnetB"
+                    }
+                ]
+            }
+        },
+        "ElasticIpA"        : {
+            "Type" : "AWS::EC2::EIP",
+            "Properties" : {
+                "Domain" : "vpc"
+            }
+        },
+        "ElasticIpB"        : {
+            "Type" : "AWS::EC2::EIP",
+            "Properties" : {
+                "Domain" : "vpc"
+            }
+        },
+        "NATgatewayA"       : {
+            "Type" : "AWS::EC2::NatGateway",
+            "Properties" : {
+                "AllocationId" : {
+                    "Fn::GetAtt" : [
+                        "ElasticIpA",
+                        "AllocationId"
+                    ]
+                },
+                "SubnetId"     : {
+                    "Ref" : "PublicSubnetA"
+                },
+                "Tags"         : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikNATgatewayA"
+                    }
+                ]
+            },
+            "Metadata"   : {
+                "AWS::CloudFormation::Designer" : {
+                    "id" : "2996784f-3bd2-46ef-adde-d1c0dc020fb2"
+                }
+            }
+        },
+        "NATgatewayB"       : {
+            "Type" : "AWS::EC2::NatGateway",
+            "Properties" : {
+                "AllocationId" : {
+                    "Fn::GetAtt" : [
+                        "ElasticIpB",
+                        "AllocationId"
+                    ]
+                },
+                "SubnetId"     : {
+                    "Ref" : "PublicSubnetB"
+                },
+                "Tags"         : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikNATgatewayB"
+                    }
+                ]
+            }
+        },
+        "PrivateRouteA"     : {
+            "Type" : "AWS::EC2::Route",
+            "Properties" : {
+                "DestinationCidrBlock" : "0.0.0.0/0",
+                "NatGatewayId"         : {
+                    "Ref" : "NATgatewayA"
+                },
+                "RouteTableId"         : {
+                    "Ref" : "PrivateRouteTableA"
+                }
+            },
+            "Metadata"   : {
+                "AWS::CloudFormation::Designer" : {
+                    "id" : "74c168a9-e38e-4ae9-a90d-c207dd63dab3"
+                }
+            }
+        },
+        "PrivateRouteTableA" : {
+            "Type" : "AWS::EC2::RouteTable",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "Tags"  : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPrivateRouteTableA"
+                    }
+                ]
+            },
+            "Metadata"   : {
+                "AWS::CloudFormation::Designer" : {
+                    "id" : "0a90abf8-6f41-4bb5-9d74-06a2b640f666"
+                }
+            }
+        },
+        "PrivateRouteB"      : {
+            "Type" : "AWS::EC2::Route",
+            "Properties" : {
+                "DestinationCidrBlock" : "0.0.0.0/0",
+                "NatGatewayId"         : {
+                    "Ref" : "NATgatewayB"
+                },
+                "RouteTableId"         : {
+                    "Ref" : "PrivateRouteTableB"
+                }
+            }
+        },
+        "PrivateRouteTableB" : {
+            "Type" : "AWS::EC2::RouteTable",
+            "Properties" : {
+                "VpcId" : {
+                    "Ref" : "VPCNetwork"
+                },
+                "Tags"  : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPrivateRouteTableB"
+                    }
+                ]
+            }
+        },
+        "publicSubnetRouteTableAssociationA" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+                "SubnetId" : {
+                    "Ref" : "PublicSubnetA"
+                },
+                "RouteTableId" : {
+                    "Ref" : "PublicRouteTableA"
+                }
+            }
+        },
+        "privateSubnetRouteTableAssociationA" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+                "SubnetId" : {
+                    "Ref" : "PrivateSubnetA"
+                },
+                "RouteTableId" : {
+                    "Ref" : "PrivateRouteTableA"
+                }
+            }
+        },
+        "dbSubnetRouteTableAssociationA"      : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+                "SubnetId" : {
+                    "Ref" : "DbSubnetA"
+                },
+                "RouteTableId" : {
+                    "Ref" : "PrivateRouteTableA"
+                }
+            }
+        },
+        "vpcIntrntGatewayAssociationA"        : {
+            "Type" : "AWS::EC2::VPCGatewayAttachment",
+            "Properties" : {
+                "InternetGatewayId" : {
+                    "Ref" : "IGW"
+                },
+                "VpcId"             : {
+                    "Ref" : "VPCNetwork"
+                }
+            }
+        },
+        "publicSubnetRouteTableAssociationB"  : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+                "SubnetId" : {
+                    "Ref" : "PublicSubnetB"
+                },
+                "RouteTableId" : {
+                    "Ref" : "PublicRouteTableB"
+                }
+            }
+        },
+        "privateSubnetRouteTableAssociationB" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+                "SubnetId" : {
+                    "Ref" : "PrivateSubnetB"
+                },
+                "RouteTableId" : {
+                    "Ref" : "PrivateRouteTableB"
+                }
+            }
+        },
+        "dbSubnetRouteTableAssociationB"      : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+                "SubnetId" : {
+                    "Ref" : "DbSubnetB"
+                },
+                "RouteTableId" : {
+                    "Ref" : "PrivateRouteTableB"
+                }
+            }
+        },
+        "PublicSecurityGroupA"                : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+                "GroupDescription" : "Public ssh secirity group for bastion hosts",
+                "GroupName"        : "AndreikPublicSecurityGroupA",
+                "VpcId"            : {
+                    "Ref" : "VPCNetwork"
+                },
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPublicSecurityGroupA"
+                    }
+                ],
+                "SecurityGroupIngress" : [
+                    {
+                        "IpProtocol" : "tcp",
+                        "FromPort"   : 22,
+                        "ToPort"     : 22,
+                        "CidrIp"     : "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
+        "PrivateSecurityGroupA"               : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+                "GroupDescription" : "Allow ssh only from public group",
+                "GroupName"        : "AndreikPrivateSecurityGroupA",
+                "VpcId"            : {
+                    "Ref" : "VPCNetwork"
+                },
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPrivateSecurityGroupA"
+                    }
+                ],
+                "SecurityGroupIngress" : [
+                    {
+                        "SourceSecurityGroupId" : {
+                            "Ref" : "PublicSecurityGroupA"
+                        },
+                        "IpProtocol"            : "tcp",
+                        "FromPort"              : 22,
+                        "ToPort"                : 22
+                    }
+                ]
+            }
+        },
+        "PublicSecurityGroupB"                : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+                "GroupDescription" : "Public ssh secirity group for bastion hosts",
+                "GroupName"        : "AndreikPublicSecurityGroupB",
+                "VpcId"            : {
+                    "Ref" : "VPCNetwork"
+                },
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPublicSecurityGroupB"
+                    }
+                ],
+                "SecurityGroupIngress" : [
+                    {
+                        "IpProtocol" : "tcp",
+                        "FromPort"   : 22,
+                        "ToPort"     : 22,
+                        "CidrIp"     : "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
+        "PrivateSecurityGroupB"               : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+                "GroupDescription" : "Allow ssh only from public group",
+                "GroupName"        : "AndreikPrivateSecurityGroupB",
+                "VpcId"            : {
+                    "Ref" : "VPCNetwork"
+                },
+                "Tags"             : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "AndreikPrivateSecurityGroupB"
+                    }
+                ],
+                "SecurityGroupIngress" : [
+                    {
+                        "SourceSecurityGroupId" : {
+                            "Ref" : "PublicSecurityGroupB"
+                        },
+                        "IpProtocol"            : "tcp",
+                        "FromPort"              : 22,
+                        "ToPort"                : 22
+                    }
+                ]
+            }
+        }
+    }
+}

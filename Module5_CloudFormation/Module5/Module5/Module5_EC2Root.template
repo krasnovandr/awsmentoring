@@ -36,7 +36,7 @@
         "PublicEc2A": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested_Template.json",
+                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested.template",
                 "Parameters": {
                     "SecurityGroupIds": {
                         "Ref": "PublicSecurityGroupId"
@@ -56,7 +56,7 @@
         "PrivateEc2A": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested_Template.json",
+                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested.template",
                 "Parameters": {
                     "SecurityGroupIds": {
                         "Ref": "PrivateSecurityGroupId"
@@ -76,7 +76,7 @@
         "DbEc2A": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
-                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested_Template.json",
+                "TemplateURL": "https://andreikcloudformation.s3.us-east-2.amazonaws.com/Module5_EC2Nested.template",
                 "Parameters": {
                     "SecurityGroupIds": {
                         "Ref": "PrivateSecurityGroupId"

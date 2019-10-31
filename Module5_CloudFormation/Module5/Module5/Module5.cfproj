@@ -13,17 +13,20 @@
     <!-- Integrated Shell -->
     <CloudFormationPath Condition=" '$(CloudFormationPath)' == '' AND Exists('$(MSBuildExtensionsPath)\Amazon Web Services LLC\AWSToolkit.VS2010\cloudformation.targets')">$(MSBuildExtensionsPath)\Amazon Web Services LLC\AWSToolkit.VS2010</CloudFormationPath>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Include="Module5_EC2_Template.json">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Module5_VPC_Template.json">
-      <SubType>Content</SubType>
-    </Content>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Module5_EC2Nested.template">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Module5_EC2Root.template">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Module5_VPC.template">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(CloudFormationPath)\cloudformation.targets" />
 </Project>
