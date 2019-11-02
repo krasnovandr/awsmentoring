@@ -88,6 +88,7 @@
       "Type": "AWS::S3::Bucket",
       "Condition": "CreateS3Bucket",
       "Properties": {
+	   "AccessControl" : "PublicRead",
         "BucketName": {
           "Fn::If": [
             "BucketNameGenerated",

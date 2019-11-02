@@ -12,7 +12,7 @@
     "framework"     : "netcoreapp2.1",
     "s3-prefix"     : "Module6/",
     "template"      : "serverless.template",
-    "template-parameters" : "\"ShouldCreateBucket\"=\"true\";\"BucketName\"=\"\"",
-    "s3-bucket"           : "andreikdbmodule6cloufromation",
+    "template-parameters" : "\"ShouldCreateBucket\"=\"true\";\"BucketName\"=\"andreikfilestore\"",
+    "s3-bucket"           : "andreikcloudformation",
     "stack-name"          : "AndreikFileApi"
 }

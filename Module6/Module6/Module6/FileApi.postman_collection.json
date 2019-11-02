@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "206cf2f6-6817-43d5-be81-ec4f5c870f5c",
+		"name": "FileApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PostImage",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/ВсеФотографии/das/Viber/Share2016-04-23-239305f5be61bdee6f8634b559f39b0bbcf360651e3f8c2eebb755bbbd04cf11-Picture.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{FilesAPI}}/api/files",
+					"host": [
+						"{{FilesAPI}}"
+					],
+					"path": [
+						"api",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Health",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{FilesAPI}}/api/health",
+					"host": [
+						"{{FilesAPI}}"
+					],
+					"path": [
+						"api",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllAvailableImages",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{FilesAPI}}/api/files",
+					"host": [
+						"{{FilesAPI}}"
+					],
+					"path": [
+						"api",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetImageByName",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{FilesAPI}}/api/files/logo192.png",
+					"host": [
+						"{{FilesAPI}}"
+					],
+					"path": [
+						"api",
+						"files",
+						"logo192.png"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRandomImage",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{FilesAPI}}/api/files/random",
+					"host": [
+						"{{FilesAPI}}"
+					],
+					"path": [
+						"api",
+						"files",
+						"random"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
