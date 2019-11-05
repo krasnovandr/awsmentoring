@@ -10,6 +10,9 @@ using Amazon.S3.Model;
 using Module6.DbModels;
 using Module6.ApiModels;
 using Amazon;
+using Amazon.SimpleNotificationService;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace Module6.Controllers
 {
@@ -17,21 +20,26 @@ namespace Module6.Controllers
     public class FilesController : Controller
     {
         private readonly IAmazonS3 _amazonS3;
+        private readonly IAmazonSimpleNotificationService _notificationService;
         private readonly ILogger _logger;
         private readonly string _bucketName;
+        private readonly string _topicArn;
         private readonly FileMetadataContext _dbContext;
 
         public FilesController(
             IConfiguration configuration,
             ILogger<FilesController> logger,
             IAmazonS3 s3Client,
+            IAmazonSimpleNotificationService notificationService,
             FileMetadataContext context)
         {
             _logger = logger;
             _amazonS3 = s3Client;
+            _notificationService = notificationService;
             _dbContext = context;
 
             _bucketName = configuration[Startup.AppS3BucketKey];
+            _topicArn = configuration[Startup.SnsTopicArn];
             if (string.IsNullOrEmpty(_bucketName))
             {
                 logger.LogCritical("Missing configuration for S3 bucket. The AppS3Bucket configuration must be set to a S3 bucket.");
@@ -47,7 +55,7 @@ namespace Module6.Controllers
             return Ok(_dbContext.Metadata);
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("{name}", Name = "GetById")]
         public async Task<IActionResult> Get(string name)
         {
             var result = await _dbContext.Metadata
@@ -74,7 +82,6 @@ namespace Module6.Controllers
             {
                 return BadRequest();
             }
-
             MemoryStream seekableStream = await GetFileStream(fileDto);
 
             var putRequest = new PutObjectRequest
@@ -86,18 +93,23 @@ namespace Module6.Controllers
             };
 
             var response = await _amazonS3.PutObjectAsync(putRequest);
-            _dbContext.Metadata.Add(new Metadata
+            var fileMetadata = new Metadata
             {
                 FileName = fileDto.File.FileName,
                 FileSize = fileDto.File.Length,
                 ContentType = fileDto.File.ContentType,
                 FileUrl = GetFileUrl(fileDto)
-            });
+            };
+
+            _dbContext.Metadata.Add(fileMetadata);
             await _dbContext.SaveChangesAsync();
+
+            var resultUrl = $"{Request.Scheme}://{Request.Host}{Request.Path}/{fileMetadata.FileName}";
+            await _notificationService.PublishAsync(_topicArn, resultUrl);
 
             _logger.LogInformation($"Uploaded object {fileDto.File.FileName} to bucket {_bucketName}. Request Id: {response.ResponseMetadata.RequestId}");
 
-            return Ok();
+            return Created(resultUrl, null);
         }
 
         private static async Task<MemoryStream> GetFileStream(CreateFileDto fileDto)

@@ -1,3 +1,4 @@
+using Amazon.SimpleNotificationService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,8 @@ namespace Module6
     public class Startup
     {
         public const string AppS3BucketKey = "AppS3Bucket";
+
+        public const string SnsTopicArn = "SnsTopicArn";
 
         public Startup(IConfiguration configuration)
         {
@@ -26,6 +29,7 @@ namespace Module6
 
             // Add S3 to the ASP.NET Core dependency injection framework.
             services.AddAWSService<Amazon.S3.IAmazonS3>();
+            services.AddAWSService<IAmazonSimpleNotificationService>();
 
             var connectionString = Configuration["DefaultConnection"];
 
