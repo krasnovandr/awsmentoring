@@ -6,6 +6,58 @@
 	},
 	"item": [
 		{
+			"name": "Subscription",
+			"item": [
+				{
+					"name": "Get Subscribers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{FilesAPI}}/api/subscription",
+							"host": [
+								"{{FilesAPI}}"
+							],
+							"path": [
+								"api",
+								"subscription"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New Subscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"krasnovandr@mail.ru\"\n}"
+						},
+						"url": {
+							"raw": "{{FilesAPI}}/api/subscription",
+							"host": [
+								"{{FilesAPI}}"
+							],
+							"path": [
+								"api",
+								"subscription"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "PostImage",
 			"request": {
 				"method": "POST",
