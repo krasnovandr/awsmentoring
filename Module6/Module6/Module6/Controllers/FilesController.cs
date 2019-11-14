@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -11,8 +12,6 @@ using Module6.DbModels;
 using Module6.ApiModels;
 using Amazon;
 using Amazon.SimpleNotificationService;
-using Newtonsoft.Json;
-using System.Net;
 
 namespace Module6.Controllers
 {
@@ -24,6 +23,7 @@ namespace Module6.Controllers
         private readonly ILogger _logger;
         private readonly string _bucketName;
         private readonly string _topicArn;
+        private readonly string _apiEndpoint;
         private readonly FileMetadataContext _dbContext;
 
         public FilesController(
@@ -40,6 +40,7 @@ namespace Module6.Controllers
 
             _bucketName = configuration[Startup.AppS3BucketKey];
             _topicArn = configuration[Startup.SnsTopicArn];
+            _apiEndpoint = configuration[Startup.ApiEndpoint];
             if (string.IsNullOrEmpty(_bucketName))
             {
                 logger.LogCritical("Missing configuration for S3 bucket. The AppS3Bucket configuration must be set to a S3 bucket.");
@@ -47,6 +48,8 @@ namespace Module6.Controllers
             }
 
             logger.LogInformation($"Configured to use bucket {_bucketName}");
+            logger.LogInformation($"Configured to use topic {_topicArn}");
+            logger.LogInformation($"Configured to use endpoint {_apiEndpoint}");
         }
 
         [HttpGet]
@@ -76,53 +79,81 @@ namespace Module6.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm]CreateFileDto fileDto)
+        public async Task<IActionResult> Post([FromBody] CreateFileDto fileDto)
         {
-            if (fileDto == null || fileDto.File == null)
+            if (fileDto?.Data == null)
             {
                 return BadRequest();
             }
-            MemoryStream seekableStream = await GetFileStream(fileDto);
 
-            var putRequest = new PutObjectRequest
+            var imageDataByteArray = Convert.FromBase64String(fileDto.Data);
+            var seekableStream = new MemoryStream(imageDataByteArray)
             {
-                BucketName = _bucketName,
-                CannedACL = S3CannedACL.PublicRead,
-                Key = fileDto.File.FileName,
-                InputStream = seekableStream
+                Position = 0
             };
 
-            var response = await _amazonS3.PutObjectAsync(putRequest);
-            var fileMetadata = new Metadata
-            {
-                FileName = fileDto.File.FileName,
-                FileSize = fileDto.File.Length,
-                ContentType = fileDto.File.ContentType,
-                FileUrl = GetFileUrl(fileDto)
-            };
 
-            _dbContext.Metadata.Add(fileMetadata);
-            await _dbContext.SaveChangesAsync();
+            await UploadImageToS3(seekableStream, fileDto.ImageName);
 
-            var resultUrl = $"{Request.Scheme}://{Request.Host}{Request.Path}/{fileMetadata.FileName}";
+            var fileMetadata = await UploadMetadataToRdc(imageDataByteArray, fileDto.ImageName);
+
+            var resultUrl = BuildFileUrl(fileDto.ImageName);
+
             await _notificationService.PublishAsync(_topicArn, resultUrl);
 
-            _logger.LogInformation($"Uploaded object {fileDto.File.FileName} to bucket {_bucketName}. Request Id: {response.ResponseMetadata.RequestId}");
+            _logger.LogInformation($"Uploaded object {fileDto.ImageName} to bucket {_bucketName}");
 
             return Created(resultUrl, null);
         }
 
-        private static async Task<MemoryStream> GetFileStream(CreateFileDto fileDto)
+        private string BuildFileUrl(string fileName)
         {
-            var seekableStream = new MemoryStream();
-            await fileDto.File.CopyToAsync(seekableStream);
-            seekableStream.Position = 0;
+            return $"{_apiEndpoint}{Request.Path}/{fileName}";
+        }
+
+        private async Task<Metadata> UploadMetadataToRdc(byte[] stream, string fileName)
+        {
+            var fileMetadata = new Metadata
+            {
+                FileName = fileName,
+                FileSize = stream.Length,
+                ContentType = MediaTypeNames.Image.Jpeg,
+                FileUrl = GetFileUrl(fileName)
+            };
+
+            _dbContext.Metadata.Add(fileMetadata);
+            await _dbContext.SaveChangesAsync();
+            return fileMetadata;
+        }
+
+        private async Task<PutObjectResponse> UploadImageToS3(MemoryStream stream, string fileName)
+        {
+            var putRequest = new PutObjectRequest
+            {
+                BucketName = _bucketName,
+                CannedACL = S3CannedACL.PublicRead,
+                Key = fileName,
+                InputStream = stream
+            };
+
+            var response = await _amazonS3.PutObjectAsync(putRequest);
+            return response;
+        }
+
+        private static MemoryStream GetFileStream(CreateFileDto fileDto)
+        {
+            var imageDataByteArray = Convert.FromBase64String(fileDto.Data);
+            var seekableStream = new MemoryStream(imageDataByteArray)
+            {
+                Position = 0
+            };
+
             return seekableStream;
         }
 
-        private string GetFileUrl(CreateFileDto fileDto)
+        private string GetFileUrl(string fileName)
         {
-            return $"https://{_bucketName}.s3.{RegionEndpoint.USEast2.SystemName}.amazonaws.com/{fileDto.File.FileName}";
+            return $"https://{_bucketName}.s3.{RegionEndpoint.USEast2.SystemName}.amazonaws.com/{fileName}";
         }
     }
 }

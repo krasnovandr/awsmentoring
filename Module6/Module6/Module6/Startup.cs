@@ -15,6 +15,8 @@ namespace Module6
 
         public const string SnsTopicArn = "SnsTopicArn";
 
+        public const string ApiEndpoint = "ApiEndpoint";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +30,7 @@ namespace Module6
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Add S3 to the ASP.NET Core dependency injection framework.
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
             services.AddAWSService<Amazon.S3.IAmazonS3>();
             services.AddAWSService<IAmazonSimpleNotificationService>();
 

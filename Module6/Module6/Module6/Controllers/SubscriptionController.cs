@@ -32,10 +32,19 @@ namespace Module6.Controllers
 
         public async Task<IActionResult> Get()
         {
-            var result = await _notificationService.ListSubscriptionsByTopicAsync(_topicArn);
+            try
+            {
+                var result = await _notificationService.ListSubscriptionsByTopicAsync(_topicArn);
 
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+          
         }
 
         [HttpPost]
@@ -46,10 +55,19 @@ namespace Module6.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("arn")]
-        public async Task<IActionResult> Delete(string arn)
+        [HttpDelete("{email}")]
+        public async Task<IActionResult> Delete(string email)
         {
-            var result = await _notificationService.UnsubscribeAsync(arn);
+            var allSubscriptions = await _notificationService.ListSubscriptionsByTopicAsync(_topicArn);
+
+            var targetSubscription = allSubscriptions.Subscriptions.FirstOrDefault(s => s.Endpoint == email);
+
+            if (targetSubscription == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _notificationService.UnsubscribeAsync(targetSubscription.SubscriptionArn);
 
             return Ok(result);
         }

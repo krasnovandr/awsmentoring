@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Module6.ApiModels
+﻿namespace Module6.ApiModels
 {
     public class CreateFileDto
     {
-        public IFormFile File { get; set; }
+        public string Data { get; set; }
+        public string ImageName { get; set; }
     }
 }
